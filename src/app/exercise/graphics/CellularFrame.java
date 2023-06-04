@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -15,70 +16,57 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 public class CellularFrame extends JFrame {
-    ImageIcon img;
+    CellularImage image;
+
     public CellularFrame(String title, String picturelocation) throws IOException {
         super(title);
-        img = (new Images(picturelocation)).pattern_img;
-        int width = (int)(Math.pow(2, (int)(Math.log(img.getIconWidth() * 8) / Math.log(2))));
-        int height = (int)(Math.pow(2, (int)(Math.log(img.getIconHeight() * 8) / Math.log(2))));
 
-        this.setSize(width, height);
+        this.image = new CellularImage(picturelocation);
+
+        this.setLayout(null);
+        this.setSize(image.width, image.height+110);
+        setUpperpanel();
+        setPicture();
+        setUnderpanel();
         this.setResizable(false);
         this.setVisible(true);
-        this.setLayout(null);
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        setPicture();
-        setExitButton();
-        setUpperPanel();
-        this.update(getGraphics());
     }
 
     public void setPicture() {
-        JPanel middlepannel = new JPanel();
-        middlepannel.setBounds(this.getWidth() / 2 - img.getIconWidth()/2 , this.getHeight() / 2 - img.getIconHeight()/2, img.getIconWidth(), img.getIconHeight());
-
-        JLabel piclab = new JLabel(img);
-        middlepannel.add(piclab);
-        this.add(middlepannel);
+        JLabel label = new JLabel(image.img);
+        label.setBounds(0,38,image.img.getIconWidth(), image.img.getIconHeight());
+        this.add(label);
     }
 
-    public void setExitButton() {
+    public void setUnderpanel() {
+        JPanel underpanel = new JPanel();
+        underpanel.setBounds(0, 38 + image.img.getIconHeight(), image.img.getIconWidth(), 38);
+        underpanel.setBackground(new Color(211,211,211));
+        underpanel.setLayout(null);
+
         JButton exit = new JButton("Exit");
+        exit.setBounds(image.img.getIconWidth() - 75, 5, 70, 27);
         exit.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent event) {
+            public void actionPerformed(ActionEvent arg0) {
                 System.exit(0);
             }
         });
-        
-        JPanel exitpan = new JPanel();
-        exitpan.setBounds(this.getWidth() - 65, this.getHeight() - 75, 65, 75);
-        exitpan.add(exit);
-        this.add(exitpan);
+        underpanel.add(exit);
+        this.add(underpanel);
     }
 
-    public void setUpperPanel() {
-        JPanel upperpan = new JPanel();
-        upperpan.setBackground(new Color(211, 211, 211));
-        upperpan.setBounds(0, 0, this.getWidth()+10, 45);
+    public void setUpperpanel() {
+        JPanel upperpanel = new JPanel();
+        upperpanel.setBounds(0,0,image.img.getIconWidth(), 38);
+        upperpanel.setBackground(new Color(211, 211, 211));
 
+        JLabel rounds = new JLabel("Rounds");
+        rounds.setBounds(0,0,70,30);
+        upperpanel.setLayout(null);
 
-        upperpan.setLayout(null);
-
-        JLabel upperlabel = new JLabel("Rounds");
-        JTextField field = new JTextField();
-        field.setBounds(60,5,40,25);
-        upperlabel.setBounds(0,5,150,30);
-        upperlabel.setLayout(null);
-        upperlabel.add(field);
-    
-        upperpan.add(upperlabel);
-        
-
-        JButton start = new JButton("Start");
-
-        start.setBounds(110, 7, 70, 30);
-        upperpan.add(start);
-        this.add(upperpan);
+        upperpanel.add(rounds);
+        this.add(upperpanel);
     }
 }

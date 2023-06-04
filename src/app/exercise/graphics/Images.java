@@ -52,25 +52,24 @@ public class Images {
                 }
 
                 else if (middle < 105) {
-                    pattern.setRGB(x*2, y*2, 0x000000);
-                    pattern.setRGB(x*2+1, y*2+1, 0xFFFFFF);
-                    pattern.setRGB(x*2, y*2+1, 0xFFFFFF);
-                    pattern.setRGB(x*2+1, y*2, 0xFFFFFF); 
-                }
-
-                else if (middle < 157) {
                     pattern.setRGB(x*2, y*2, 0xFFFFFF);
                     pattern.setRGB(x*2+1, y*2+1, 0x000000);
                     pattern.setRGB(x*2, y*2+1, 0x000000);
                     pattern.setRGB(x*2+1, y*2, 0x000000); 
-                    
                 }
 
-                else if (middle < 209) {
+                else if (middle < 157) {
                     pattern.setRGB(x*2, y*2, 0x000000);
                     pattern.setRGB(x*2+1, y*2+1, 0x000000);
                     pattern.setRGB(x*2, y*2+1, 0xFFFFFF);
                     pattern.setRGB(x*2+1, y*2, 0xFFFFFF); 
+                }
+
+                else if (middle < 209) {
+                    pattern.setRGB(x*2, y*2, 0x000000);
+                    pattern.setRGB(x*2+1, y*2+1, 0xFFFFFF);
+                    pattern.setRGB(x*2, y*2+1, 0xFFFFFF);
+                    pattern.setRGB(x*2+1, y*2, 0xFFFFFF);
                 }
 
                 else {
