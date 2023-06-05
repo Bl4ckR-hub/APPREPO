@@ -8,7 +8,7 @@ import javax.swing.ImageIcon;
 
 public class CellularImage {
     ImageIcon img;
-    ImageIcon prev;
+    CellularImage previous;
     int width, height;
 
     public CellularImage(String picturelocation) throws IOException {
@@ -29,11 +29,47 @@ public class CellularImage {
                     newres.setRGB(i,j, Color.white.getRGB());
             }
         }
-        prev = null;
+        previous = null;
         img = new ImageIcon(newres);
     }
 
-    public CellularImage(ImageIcon prev) {
-        this.prev = prev;
+    public CellularImage(CellularImage previous) {
+        width = previous.img.getIconWidth();
+        height = previous.img.getIconHeight();
+
+        this.previous = previous;
+        BufferedImage newimage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        BufferedImage prev = (BufferedImage) previous.img.getImage();
+        
+        int counter = 0;
+
+        int r, l, t, b;
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                r = (x+1) % width;
+                l = (x-1+width) % width;
+                t = (y-1+height) % height;
+                b = (y+1) % height;
+
+                counter = 0;
+                if (prev.getRGB(r,y) == -1) counter++;
+                if (prev.getRGB(x,t) == -1) counter++;
+                if (prev.getRGB(x,b) == -1) counter++;
+                if (prev.getRGB(l,y) == -1) counter++;
+                if (prev.getRGB(r,t) == -1) counter++;
+                if (prev.getRGB(r,b) == -1) counter++;
+                if (prev.getRGB(l,t) == -1) counter++;
+                if (prev.getRGB(l,b) == -1) counter++;
+                
+                if (counter % 2 > 0) {
+                    newimage.setRGB(x,y,0);
+                }
+
+                else {
+                    newimage.setRGB(x,y,-1);
+                }
+            }
+        }
+        img = new ImageIcon(newimage);
     }
 }

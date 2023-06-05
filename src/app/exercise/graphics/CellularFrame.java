@@ -22,6 +22,9 @@ public class CellularFrame extends JFrame {
         super(title);
 
         this.image = new CellularImage(picturelocation);
+        int i = 0;
+        while (i++ < 192)
+            setNewPicture();
 
         this.setLayout(null);
         this.setSize(image.width, image.height+110);
@@ -31,6 +34,10 @@ public class CellularFrame extends JFrame {
         this.setResizable(false);
         this.setVisible(true);
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+    }
+
+    public void setNewPicture() {
+        image = new CellularImage(image);
     }
 
     public void setPicture() {
@@ -63,9 +70,17 @@ public class CellularFrame extends JFrame {
         upperpanel.setBackground(new Color(211, 211, 211));
 
         JLabel rounds = new JLabel("Rounds");
-        rounds.setBounds(0,0,70,30);
+        rounds.setBounds(5,5,70,30);
         upperpanel.setLayout(null);
+        
+        JTextField round = new JTextField();
+        round.setBounds(75, 5, 70, 30);
 
+        JButton start = new JButton("Start");
+        start.setBounds(150, 7, 70, 27);
+
+        upperpanel.add(start);
+        upperpanel.add(round);
         upperpanel.add(rounds);
         this.add(upperpanel);
     }
