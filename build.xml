@@ -1,0 +1,28 @@
+<project name="app_jframe" basedir="." default="runjar">
+    <target name="init">
+        <mkdir dir="build"/>
+        <mkdir dir="javadoc"/>
+        <mkdir dir="jar"/>
+    </target>
+    <target name="compile" depends="init">
+        <javac srcdir="src" destdir="build"/>
+    </target>
+    <target name="clean" depends="tojar">
+        <delete dir="build"/>
+        <delete dir="javadoc"/>
+        <delete dir="jar"/>
+        <delete file="MANIFEST.MF"/>
+    </target>
+    <target name="JAVADOC">
+        <javadoc sourcepath="src" destdir="javadoc" author="true" version="true" private="true"/>
+    </target>
+    <target name="tojar" depends="compile">
+        <manifest file = "MANIFEST.MF">
+            <attribute name = "Main-Class" value = "app.exercise.graphics.Main"/>
+        </manifest>
+        <jar destfile="./jar/game_of_life.jar" basedir="./build" manifest="MANIFEST.MF"/>
+    </target>
+    <target name="runjar" depends="tojar">
+        <java jar="./jar/game_of_life.jar" args="../picture/smile32.jpg" fork="true"/>
+    </target>
+</project>
